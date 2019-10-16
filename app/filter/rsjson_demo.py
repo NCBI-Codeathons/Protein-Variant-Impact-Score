@@ -46,6 +46,25 @@ def printAllele_annotations(primary_refsnp):
         for clininfo in annot['clinical']:
             print(",".join(clininfo['clinical_significances']))
 
+def printGenePos(primary_refsnp):
+    '''
+    print the NP position
+    '''
+    for annot in primary_refsnp['allele_annotations']:
+        for asm_annot in annot['assembly_annotation']:
+#           print(",".join(clininfo['clinical_significances']))
+            for gene in asm_annot['genes']:
+                for rna in gene['rnas']:
+                    if 'protein' in rna.keys():
+                        spdi=rna['protein']['variant']['spdi']
+                        if spdi['inserted_sequence'] != spdi['deleted_sequence']:
+                             (ref, alt, pos, seq_id) = (spdi['deleted_sequence'],
+                                               spdi['inserted_sequence'],
+                                               spdi['position'],
+                                               spdi['seq_id'])
+                             if seq_id.startswith("NP_"):
+                                 print("\t".join([ref,alt,str(pos),seq_id]))
+#                             break 
 
 def printPlacements(info):
     '''
@@ -89,6 +108,8 @@ with bz2.BZ2File(args.input_fn, 'rb') as f_in:
             primary_snapshot_data = rs_obj['primary_snapshot_data']
             printPlacements(primary_snapshot_data['placements_with_allele'])
             printAllele_annotations(primary_snapshot_data)
+            print("===== Gene Position====")
+            printGenePos(primary_snapshot_data)
             print("\n")
 
         cnt += 1
