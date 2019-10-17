@@ -43,7 +43,18 @@ class SNPParserTestCase(unittest.TestCase):
     def test_get_variant_frequency(self):
         snp_parser = SNPParser()
         freq = snp_parser.get_variant_frequency(self.test_set['63751109'])
-        self.assertEqual(freq, set([('C',0, 78698)]) , 'frequency test failed.')
+        self.assertEqual(freq, set([('T',0, 78698)]) , 'frequency test failed.')
+
+    def test_get_clinical_significances(self):
+        snp_parser = SNPParser()
+        expected=dict()
+        aset=set()
+        aset.add('pathogenic')
+        expected['T']=aset
+
+        sigs= snp_parser.get_clinical_significances(self.test_set['63751109'])
+        self.assertEqual(sigs, expected , 'clinical significances test failed.')
+    
     
 
 if __name__ == '__main__':
