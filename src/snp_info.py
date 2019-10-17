@@ -27,11 +27,11 @@ class SNPParser(object):
                                     if seq_id.startswith("NP_"):
                                         print("\t".join([ref,alt,str(pos),seq_id]))
                                         # add to return list
-                                        spdis.append((alt,ref,pos,seq_id))
+                                        spdis.append((ref,alt,pos,seq_id))
       
 
 #                             break 
-        return spdis
+        return set(spdis)
 
     def get_variant_frequency(self, rs_obj):
         pass
