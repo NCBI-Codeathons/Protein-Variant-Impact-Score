@@ -36,9 +36,10 @@ class SNPParser(object):
     def get_variant_frequency(self, rs_obj):
         allelefreqs=[]
         if 'primary_snapshot_data' in rs_obj:
+            primary_snapshot_data = rs_obj['primary_snapshot_data']
             for annot in primary_snapshot_data['allele_annotations']:
                 for frequency in annot['frequency']:
-		    observation=frequency['observation']
+                    observation=frequency['observation']
                     if observation['deleted_sequence']!=observation['inserted_sequence']:     
                         print (observation['deleted_sequence'],frequency['allele_count'],frequency['total_count'])
                         allelefreqs.append((observation['deleted_sequence'],frequency['allele_count'],frequency['total_count']))

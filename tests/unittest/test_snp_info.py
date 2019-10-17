@@ -43,7 +43,7 @@ class SNPParserTestCase(unittest.TestCase):
     def test_get_variant_frequency(self):
         snp_parser = SNPParser()
         freq = snp_parser.get_variant_frequency(self.test_set['63751109'])
-        self.assertEqual(freq, (0, 78698) , 'frequency test failed.')
+        self.assertEqual(freq, set([('C',0, 78698)]) , 'frequency test failed.')
     
 
 if __name__ == '__main__':
