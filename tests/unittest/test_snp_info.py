@@ -25,16 +25,16 @@ class SNPParserTestCase(unittest.TestCase):
         snp_parser = SNPParser()
         # ref   alt      pos     seq_id
         expected = set([
-            ('S', 'Y', 43, 'NP_000240.1'),
-            ('S', 'Y', 43, 'NP_001245200.1'),
-            ('S', 'Y', 43, 'NP_001341557.1'),
-            ('S', 'Y', 43, 'NP_001341558.1'),
-            ('S', 'Y', 43, 'NP_001341559.1'),
-            ('S', 'F', 43, 'NP_000240.1'),
-            ('S', 'F', 43, 'NP_001245200.1'),
-            ('S', 'F', 43, 'NP_001341557.1'),
-            ('S', 'F', 43, 'NP_001341558.1'),
-            ('S', 'F', 43, 'NP_001341559.1'),
+            ('S', 'Y', 44, 'NP_000240.1'),
+            ('S', 'Y', 44, 'NP_001245200.1'),
+            ('S', 'Y', 44, 'NP_001341557.1'),
+            ('S', 'Y', 44, 'NP_001341558.1'),
+            ('S', 'Y', 44, 'NP_001341559.1'),
+            ('S', 'F', 44, 'NP_000240.1'),
+            ('S', 'F', 44, 'NP_001245200.1'),
+            ('S', 'F', 44, 'NP_001341557.1'),
+            ('S', 'F', 44, 'NP_001341558.1'),
+            ('S', 'F', 44, 'NP_001341559.1'),
         ])
         protein_info = snp_parser.get_variant_protein_info(self.test_set['63751109'])
         self.assertEqual(protein_info, expected , 'protein info test failed.')
