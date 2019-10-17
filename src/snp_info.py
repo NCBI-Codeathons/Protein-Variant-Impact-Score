@@ -25,7 +25,6 @@ class SNPParser(object):
                                                spdi['position'],
                                                spdi['seq_id'])
                                     if seq_id.startswith("NP_"):
-                                        #print("\t".join([ref,alt,str(pos),seq_id]))
                                         # add to return list
                                         # change the position to 1-based
                                         spdis.append((ref,alt,pos+1,seq_id))
@@ -42,7 +41,6 @@ class SNPParser(object):
                 for frequency in annot['frequency']:
                     observation=frequency['observation']
                     if observation['deleted_sequence']!=observation['inserted_sequence']:
-                        print (observation['inserted_sequence'],frequency['allele_count'],frequency['total_count'])
                         allelefreqs.append({observation['inserted_sequence']: (frequency['allele_count'], frequency['total_count'])})
         return allelefreqs
 
@@ -60,7 +58,6 @@ class SNPParser(object):
                 for frequency in annot['frequency']:
                     observation=frequency['observation']
                     if observation['deleted_sequence']!=observation['inserted_sequence']:
-                        #print (observation['deleted_sequence'],frequency['allele_count'],frequency['total_count'])
                         allele=observation['inserted_sequence']
                         break
 
