@@ -18,13 +18,13 @@ class SNPParserTestCase(unittest.TestCase):
     def make_test_set(self):
         input = open('../data/test.case.json', 'r')
         for line in input:
-            self.test_set[json.loads(line)['refsnp_id']] = line
+            self.test_set[json.loads(line)['refsnp_id']] = json.loads(line)
         
 
     def test_get_variant_protein_info(self):
         snp_parser = SNPParser()
         # ref   alt      pos     seq_id
-        expected = [
+        expected = set([
             ('S', 'Y', 43, 'NP_000240.1'),
             ('S', 'Y', 43, 'NP_001245200.1'),
             ('S', 'Y', 43, 'NP_001341557.1'),
@@ -35,7 +35,7 @@ class SNPParserTestCase(unittest.TestCase):
             ('S', 'F', 43, 'NP_001341557.1'),
             ('S', 'F', 43, 'NP_001341558.1'),
             ('S', 'F', 43, 'NP_001341559.1'),
-        ]
+        ])
         protein_info = snp_parser.get_variant_protein_info(self.test_set['63751109'])
         self.assertEqual(protein_info, expected , 'protein info test failed.')
 
