@@ -1,5 +1,6 @@
  
-# POSSUM Impact
+![](./possum.png)
+
 ## Motivation
 There are over 8 million human missense protein variations in dbSNP. These are the changes that may affect protein structure and funciton. However less than 2% of these changes have known human phenotypes. Predicting the potential impact of these uncharacterized variants is an important task in biomedical research.
 
