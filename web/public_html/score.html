@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Protein Variant Impact Score</title>
+</head>
+
+<body>
+<h1>Protein Variant Impact Score</h1>
+<hr>
+
+<p>
+<form action=score.html>
+<label for=id>Accession #:</label>
+<input type=text name=id>
+</form>
+</p>
+<hr>
+
+<script><!--
+var id = '';
+var args = window.location.href.replace(/^[^?]+\?/, '').split('&');
+for (var i = 0; i < args.length; i++) {
+  var pair = args[i].split('=');
+  if (pair[0] == 'id') id = pair[1];
+}
+// debug
+var debug = document.createElement('p');
+debug.innerHTML = '<a href=ajax/score?id=' + id + '>score</a> <a href=ajax/fetch?id=' + id + '>fetch</a>';
+document.body.appendChild(debug);
+
+--></script>
+
+</body>
+</html>
