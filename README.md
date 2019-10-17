@@ -18,3 +18,10 @@ We started with a file with 38,299 gi numbers for representative human RefSeq pr
 ## Planned Features
 
 ## People
+* Hua Zhang NCBI/IEB
+* Peter Cooper NCBI/IEB
+* Sema Kachalo NCBI/IEB
+* Rich McVeigh NCBI/IEB
+* Jialin (Charlie) Xiang NCBI/IEB
+* Jiyao Wang NCBI/IEB
+
