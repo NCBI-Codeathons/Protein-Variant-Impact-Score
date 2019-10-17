@@ -41,9 +41,9 @@ class SNPParser(object):
                 for frequency in annot['frequency']:
                     observation=frequency['observation']
                     if observation['deleted_sequence']!=observation['inserted_sequence']:     
-                        #print (observation['deleted_sequence'],frequency['allele_count'],frequency['total_count'])
-                        allelefreqs.append((observation['inserted_sequence'],frequency['allele_count'],frequency['total_count']))
-        return set(allelefreqs)
+                        print (observation['inserted_sequence'],frequency['allele_count'],frequency['total_count'])
+                        allelefreqs.append({observation['inserted_sequence']: (frequency['allele_count'], frequency['total_count'])})
+        return allelefreqs
 
     def get_clinical_significances(self, rs_obj):
         '''
