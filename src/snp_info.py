@@ -27,7 +27,7 @@ class SNPParser(object):
                                     if seq_id.startswith("NP_"):
                                         print("\t".join([ref,alt,str(pos),seq_id]))
                                         # add to return list
-                                        spdis.append((seq_id,pos,alt,ref))
+                                        spdis.append((alt,ref,pos,seq_id))
       
 
 #                             break 
