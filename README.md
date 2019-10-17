@@ -12,3 +12,6 @@ We started with a file with 38,299 gi numbers for representative human RefSeq pr
 
 ## Preliminary Display
 ![alt txt](https://github.com/NCBI-Codeathons/Protein-Variant-Impact-Score/blob/master/display.png)
+## Planned Features
+
+## People
