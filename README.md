@@ -11,7 +11,7 @@ Known pathogenic changes in the TP53 protein show up with negative scores in the
 ## Outline of Method
 We started with a file with 38,299 gi numbers for representative human RefSeq proteins and matched these to 38,277 current RefSeq accessions in the NCBI ID database and mapped scores from missense variants to the conserved domains of the protein. The display highlight the predicted impact on the protein.
 
-![alt txt](https://github.com/NCBI-Codeathons/Protein-Variant-Impact-Score/blob/master/Flowchart_figures1.png)
+![alt txt](./Flowchart_figures1.png)
 
 ## Preliminary Display
 ![alt txt](https://github.com/NCBI-Codeathons/Protein-Variant-Impact-Score/blob/master/display.png)
