@@ -5,7 +5,7 @@ class SNPParser(object):
     extract protein accession, variant amino acid position,
     and variant frequency.
     '''
-    
+
     def get_variant_protein_info(self, rs_obj):
         '''
         extract variant amino acid position.
@@ -27,10 +27,11 @@ class SNPParser(object):
                                     if seq_id.startswith("NP_"):
                                         #print("\t".join([ref,alt,str(pos),seq_id]))
                                         # add to return list
-                                        spdis.append((ref,alt,pos,seq_id))
-      
+                                        # change the position to 1-based
+                                        spdis.append((ref,alt,pos+1,seq_id))
 
-#                             break 
+
+#                             break
         return set(spdis)
 
     def get_variant_frequency(self, rs_obj):
@@ -40,7 +41,7 @@ class SNPParser(object):
             for annot in primary_snapshot_data['allele_annotations']:
                 for frequency in annot['frequency']:
                     observation=frequency['observation']
-                    if observation['deleted_sequence']!=observation['inserted_sequence']:     
+                    if observation['deleted_sequence']!=observation['inserted_sequence']:
                         print (observation['inserted_sequence'],frequency['allele_count'],frequency['total_count'])
                         allelefreqs.append({observation['inserted_sequence']: (frequency['allele_count'], frequency['total_count'])})
         return allelefreqs
@@ -54,11 +55,11 @@ class SNPParser(object):
         if 'primary_snapshot_data' in rs_obj:
             primary_refsnp= rs_obj['primary_snapshot_data']
             for annot in primary_refsnp['allele_annotations']:
-                # find the allele alternative 
+                # find the allele alternative
                 allele=""
                 for frequency in annot['frequency']:
                     observation=frequency['observation']
-                    if observation['deleted_sequence']!=observation['inserted_sequence']:     
+                    if observation['deleted_sequence']!=observation['inserted_sequence']:
                         #print (observation['deleted_sequence'],frequency['allele_count'],frequency['total_count'])
                         allele=observation['inserted_sequence']
                         break
@@ -70,6 +71,6 @@ class SNPParser(object):
                             for sig in clininfo['clinical_significances']:
                                 sigs.add(sig)
 
-                    significances[allele]= sigs; 
+                    significances[allele]= sigs;
 
         return significances
