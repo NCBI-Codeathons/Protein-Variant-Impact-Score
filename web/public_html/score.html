@@ -132,8 +132,10 @@ function draw(data) {
   i = 0;
   for (k in data.pssm) {
     for (j = 0; j < data.pssm[k].length; j++) {
-      aa(i * 25, j * 25, data.pssm[k].sequence[i], 10);
+console.log(i,j,k);
+      aa(j * 25, i * 25, data.pssm[k].sequence[i], 10);
     }
+    i++;
   }
   out.style.wwidth = xx + 'px';
   out.style.height = yy + 'px';
