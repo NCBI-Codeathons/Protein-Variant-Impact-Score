@@ -34,6 +34,7 @@ http.createServer(function(req, res) {
         resp.on('end', () => {
           res.writeHead(200, {'Content-Type': 'application/json'});
           var arr = data.split(/[\n\r]+/);
+          fetch.id = query.id;
           fetch.title = arr[0];
           fetch.sequence = arr.slice(1).join('');
           res.end(JSON.stringify(fetch));
