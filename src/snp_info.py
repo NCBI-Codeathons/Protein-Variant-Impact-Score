@@ -46,9 +46,10 @@ class SNPParser(MRJob):
             primary_snapshot_data = rs_obj['primary_snapshot_data']
             for annot in primary_snapshot_data['allele_annotations']:
                 for frequency in annot['frequency']:
-                    observation=frequency['observation']
-                    if observation['deleted_sequence']!=observation['inserted_sequence']:
-                        allelefreqs.append({observation['inserted_sequence']: (frequency['allele_count'], frequency['total_count'])})
+                    if frequency['study_name'] == 'GnomAD':
+                        observation=frequency['observation']
+                        if observation['deleted_sequence']!=observation['inserted_sequence']:
+                            allelefreqs.append({observation['inserted_sequence']: (frequency['allele_count'], frequency['total_count'])})
         return allelefreqs
 
     def get_clinical_significances(self, rs_obj):
