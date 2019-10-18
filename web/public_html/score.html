@@ -136,6 +136,7 @@ function draw(data) {
       for (n = 0; n < data.pssm[k].length; n++) {
         for (m = 0; m < data.pssm[k][n].residues.length; m++) {
 console.log(data.pssm[k][n].residues[m]);
+          aa(data.pssm[k][n].residues[m].resi * 25, i * 25, data.pssm[k].sequence[j], 10);
         }
       }
     }
