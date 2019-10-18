@@ -41,8 +41,18 @@ Single SNP mode
 ```
 python pssm_var.py -r rs429358
 ```
+Sample output
+```
+{'snp_id': '429358', 'pssm': [{'NP_001289619': [{'pssmid': 'pfam01442', 'residues': [{'resi': 130, 'pline': 45, 'scores': {'A': -2, 'C': -3, 'D': -5, 'E': 2, 'F': -7, 'G': -1, 'H': -5, 'I': -5, 'K': 4, 'L': -2, 'M': -5, 'N': -3, 'P': -6, 'Q': 0, 'R': 5, 'S': -2, 'T': 1, 'V': 1, 'W': -7, 'Y': -6}}]}]}, {'NP_000032': [{'pssmid': 'pfam01442', 'residues': [{'resi': 130, 'pline': 45, 'scores': {'A': -2, 'C': -3, 'D': -5, 'E': 2, 'F': -7, 'G': -1, 'H': -5, 'I': -5, 'K': 4, 'L': -2, 'M': -5, 'N': -3, 'P': -6, 'Q': 0, 'R': 5, 'S': -2, 'T': 1, 'V': 1, 'W': -7, 'Y': -6}}]}]}, {'NP_001289620': [{'pssmid': 'pfam01442', 'residues': [{'resi': 130, 'pline': 45, 'scores': {'A': -2, 'C': -3, 'D': -5, 'E': 2, 'F': -7, 'G': -1, 'H': -5, 'I': -5, 'K': 4, 'L': -2, 'M': -5, 'N': -3, 'P': -6, 'Q': 0, 'R': 5, 'S': -2, 'T': 1, 'V': 1, 'W': -7, 'Y': -6}}]}]}, {'NP_001289617': [{'pssmid': 'pfam01442', 'residues': [{'resi': 156, 'pline': 45, 'scores': {'A': -2, 'C': -3, 'D': -5, 'E': 2, 'F': -7, 'G': -1, 'H': -5, 'I': -5, 'K': 4, 'L': -2, 'M': -5, 'N': -3, 'P': -6, 'Q': 0, 'R': 5, 'S': -2, 'T': 1, 'V': 1, 'W': -7, 'Y': -6}}]}]}, {'NP_001289618': [{'pssmid': 'pfam01442', 'residues': [{'resi': 130, 'pline': 45, 'scores': {'A': -2, 'C': -3, 'D': -5, 'E': 2, 'F': -7, 'G': -1, 'H': -5, 'I': -5, 'K': 4, 'L': -2, 'M': -5, 'N': -3, 'P': -6, 'Q': 0, 'R': 5, 'S': -2, 'T': 1, 'V': 1, 'W': -7, 'Y': -6}}]}]}], 'clin_sig': {'C': {'pathogenic', 'other', 'association'}}, 'freq': [{'C': (5135, 31228)}], 'protein_info': {('C', 'R', 130, 'NP_001289619.1'), ('C', 'R', 130, 'NP_000032.1'), ('C', 'R', 130, 'NP_001289620.1'), ('C', 'R', 156, 'NP_001289617.1'), ('C', 'R', 130, 'NP_001289618.1')}}
+```
 
+## C++ NCBI Toolkit applications
+**getpssmforgipos** outputs PSSM json object for proteins
 
+**Sample commandline:**
+```
+getpssmforgipos gi optional_resi_pos
+```
 ## Dependencies
 * Python 3.6
 * NCBI C++ toolkit
