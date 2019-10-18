@@ -68,7 +68,12 @@ getpssmforgipos 4557325
 ## Web Display
 Sample web display showing variant scores installed on GCP currently at http://35.207.21.237
 
-## Planned Features
+## future Directions
+* Improve the web interface
+* Sort by specific disease
+* Include variants that don't have frequency data
+* Include binding site information in the model
+* Sort clincial signficance vs. score
 
 ## People
 * Hua Zhang NCBI/IEB
