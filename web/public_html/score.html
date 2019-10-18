@@ -113,7 +113,8 @@ function refine(data) {
     alert('no data'); return;
   }
   var k, n = 0;
-console.log('DATA', data);
+console.log('DATA:', data);
+console.log('DATA.pssm:', data.pssm);
   for (k in data.pssm) {
 console.log('id', k);
     if (data.pssm.hasOwnProperty(k)) {
