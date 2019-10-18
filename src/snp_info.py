@@ -1,11 +1,18 @@
 import json
+from mrjob.job import MRJob
 
-class SNPParser(object):
+class SNPParser(MRJob):
     '''
     extract protein accession, variant amino acid position,
     and variant frequency.
     '''
 
+    def mapper(self, _, line):
+        rs_obj = json.loads(line)
+        if self.is_missense(rs_obj):
+            print(line)
+
+    
     def get_variant_protein_info(self, rs_obj):
         '''
         extract variant amino acid position.
@@ -71,3 +78,38 @@ class SNPParser(object):
                     significances[allele]= sigs;
 
         return significances
+
+
+    def is_missense(self, rs_obj):
+
+        if 'primary_snapshot_data' in rs_obj:
+            for allele_annotation in rs_obj['primary_snapshot_data']['allele_annotations'][1:]:
+                for assm_annot in allele_annotation['assembly_annotation']:
+                    if 'genes' in assm_annot:
+                        for gene in assm_annot['genes']:
+                            for rna in gene['rnas']:
+                                if 'protein' in rna:
+                                    for ontology in rna['protein']['sequence_ontology']:
+                                        if ontology['name'] == 'missense_variant':
+                                            return True
+
+        return False
+
+
+if __name__ == "__main__":
+
+    SNPParser.run()
+    
+    # json_cgi = 'https://api.ncbi.nlm.nih.gov/variation/v0/beta/refsnp/'
+
+    # parser = argparse.ArgumentParser(description='Retrieving PSSM score for a SNP')
+    # parser.add_argument('-r', dest='rs', required=True,
+    #                     help='The snp_id')
+    # args = parser.parse_args()
+    # url = json_cgi + str(args.rs)
+    # req = urllib.request.Request(url)
+    # r = urllib.request.urlopen(req).read()
+    # rs = json.loads(r.decode('utf-8'))
+
+    # snp_parser = SNPParser()
+    # print(snp_parser.is_missense(rs))

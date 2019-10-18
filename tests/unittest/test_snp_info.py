@@ -54,8 +54,15 @@ class SNPParserTestCase(unittest.TestCase):
 
         sigs= snp_parser.get_clinical_significances(self.test_set['63751109'])
         self.assertEqual(sigs, expected , 'clinical significances test failed.')
-    
-    
+
+        
+    def test_is_missense(self):
+
+        snp_parser = SNPParser()
+        
+        self.assertEqual(snp_parser.is_missense(self.test_set['63751109']), True , 'is_missense positive test failed.')
+        self.assertEqual(snp_parser.is_missense(self.test_set['328']), False , 'is_missense negative test failed.')
+        
 
 if __name__ == '__main__':
 
