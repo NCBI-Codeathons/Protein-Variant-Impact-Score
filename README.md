@@ -16,9 +16,31 @@ We started with a file with 38,299 gi numbers for representative human RefSeq pr
 
 ![alt txt](./Flowchart_figures1.png)
 
-## Preliminary Display
-![alt txt](./display.png)
+
 ## Software
+### Python Applications
+**snp_info.py** a python class that gets all missense snps, frequency data from GnomAD_exome, phenotype compatible with Hadoop cluster.
+
+ **Input** compressed (bzip2) json files from the [dbSNP FTP site](https://ftp.ncbi.nlm.nih.gov/snp/latest_release/JSON/)S
+
+ **Sample commandline:**
+
+ ```
+ python snp_info.py -r hadoop hdfs:///user/wangq2/r69_json -o hdfs:///user/zhahua/missense_b153 --no-output --jobconf  mapreduce.job.name=get.missense --jobconf mapreduce.job.reduces=100 --jobconf mapreduce.job.queuename=prod.dbsnp -c mrjob.conf
+ ```
+**pssm_var.py** uses snp_info.py class to combine scores from PSSM data with snp_info
+
+**Sample commandlines**
+
+
+File mode
+```
+python pssm_var.py -f missense_snp_json_file.gz
+```
+Single SNP mode
+```
+python pssm_var.py -r rs429358
+```
 
 
 ## Dependencies
