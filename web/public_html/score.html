@@ -2,6 +2,21 @@
 <html>
 <head>
 <title>Protein Variant Impact Score</title>
+<style type="text/css">
+#output {
+ display:inline-block;
+ position:relative;
+}
+#output span {
+ display:inline-block;
+ position:absolute;
+ width:24px;
+ height:24px;
+ line-height:24px;
+ text-align:center;
+ border-radius:5px;
+}
+</style>
 </head>
 
 <body>
@@ -16,10 +31,40 @@
 </p>
 <hr>
 
+<div id=output></div>
+
 <script><!--
+var i;
+var dx = 25;
+var dy = 25;
+var xx = 0;
+var yy = 0;
+var colors = [
+  '#0a0', '#0b0', '#0c0', '#0d0', '#0e0', '#0f0', '#6f6', 
+  '#9f9', '#bfb', '#cfc', '#ddd', '#ecc', '#fbb', '#f99', 
+  '#f77', '#f55', '#f00', '#e00', '#d00', '#c00', '#b00'
+];
+function aa(x, y, a, c, t) {
+  var span = document.createElement('span');
+  span.innerHTML = a;
+  span.style.left = x + 'px';
+  span.style.top = y + 'px';
+  span.style.backgroundColor = colors[10 + c];
+  if (xx < x + dx) xx = x + dx;
+  if (yy < y + dy) yy = y + dy;
+  if (typeof t != 'undefined') span.title = t;
+  out.appendChild(span);
+}
+var out = document.getElementById('output');
+for (i = 0; i < 21; i++) {
+  aa(i * 25, i * 5, 'ABCDEFGHIJKLMNOPQRSTU'[i], i - 10, i);
+}
+out.style.wwidth = xx + 'px';
+out.style.height = yy + 'px';
+
 var id = '';
 var args = window.location.href.replace(/^[^?]+\?/, '').split('&');
-for (var i = 0; i < args.length; i++) {
+for (i = 0; i < args.length; i++) {
   var pair = args[i].split('=');
   if (pair[0] == 'id') id = pair[1];
 }
