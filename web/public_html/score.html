@@ -127,14 +127,16 @@ function refine(data) {
 }
 
 function draw(data) {
-  var i, j, k, n;
+  var i, j, k, n, m;
   console.log('drawing:', data);
   i = 0;
   for (k in data.pssm) {
     for (j = 0; j < data.pssm[k].sequence.length; j++) {
       aa(j * 25, i * 25, data.pssm[k].sequence[j], 0);
       for (n = 0; n < data.pssm[k].length; n++) {
-console.log(data.pssm[k][n]);
+        for (m = 0; m < data.pssm[k][n].residues.length; m++) {
+console.log(data.pssm[k][n].residues[m]);
+        }
       }
     }
     i++;
