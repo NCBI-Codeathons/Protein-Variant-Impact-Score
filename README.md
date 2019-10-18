@@ -19,9 +19,9 @@ We started with a file with 38,299 gi numbers for representative human RefSeq pr
 
 ## Software
 ### Python Applications
-**[snp_info.py](./src/pssm_var.py)** a python class that gets all missense snps, frequency data from GnomAD_exome, phenotype compatible with Hadoop cluster.
+**[snp_info.py](./src/pssm_var.py)** a python class that gets all missense snps, frequency data from GnomAD_exome, phenotype compatible with Hadoop cluster. Samle [configuration file](./src/)
 
- **Input** compressed (bzip2) json files from the [dbSNP FTP site](https://ftp.ncbi.nlm.nih.gov/snp/latest_release/JSON/)S
+ **Input** compressed (bzip2) json files from the [dbSNP FTP site](https://ftp.ncbi.nlm.nih.gov/snp/latest_release/JSON/)
 
  **Sample commandline:**
 
