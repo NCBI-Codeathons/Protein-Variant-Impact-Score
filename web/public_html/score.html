@@ -62,16 +62,40 @@ for (i = 0; i < 21; i++) {
 out.style.wwidth = xx + 'px';
 out.style.height = yy + 'px';
 
+///////////////////////////////////////////////////
+function download(url) {
+  return new Promise(function(resolve, reject) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == this.DONE) {
+        if (this.status == 200) {
+          resolve(JSON.parse(xhttp.response));
+        }
+        else {
+          reject('Cannot load');
+        }
+      }
+    };
+    xhttp.open('GET', url, true);
+    xhttp.send();
+  });
+}
+
 var id = '';
 var args = window.location.href.replace(/^[^?]+\?/, '').split('&');
 for (i = 0; i < args.length; i++) {
   var pair = args[i].split('=');
   if (pair[0] == 'id') id = pair[1];
 }
+
+download('/ajax/score?id=' + id).then(function(data) {
+  console.log('received data:', data);
+}).catch(function(err) { console.log(err); });
+
 // debug
 var debug = document.createElement('p');
-debug.innerHTML = '<a href=ajax/score?id=' + id + '>score</a> <a href=ajax/fetch?id=' + id + '>fetch</a>';
-document.body.appendChild(debug);
+//debug.innerHTML = '<a href=ajax/score?id=' + id + '>score</a> <a href=ajax/fetch?id=' + id + '>fetch</a>';
+//document.body.appendChild(debug);
 
 --></script>
 
