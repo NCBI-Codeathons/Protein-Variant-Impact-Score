@@ -91,7 +91,7 @@ if __name__ == "__main__":
 
     if rs:
         json_cgi = 'https://api.ncbi.nlm.nih.gov/variation/v0/beta/refsnp/'
-        url = json_cgi + args.rs
+        url = json_cgi + rs
         req = urllib.request.Request(url)
         r = urllib.request.urlopen(req).read()
         rs = json.loads(r.decode('utf-8'))
