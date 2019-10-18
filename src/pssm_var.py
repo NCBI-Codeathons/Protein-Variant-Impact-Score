@@ -32,7 +32,7 @@ class PSSMVar(object):
         sigs= snp_parser.get_clinical_significances(rs)
         freq = snp_parser.get_variant_frequency(rs)        
         protein_info = snp_parser.get_variant_protein_info(rs)
-        prot_var = {'snp_id': snp_id, 'pssm': [], 'clin_sig': sigs, 'freq': freq}
+        prot_var = {'snp_id': snp_id, 'pssm': [], 'clin_sig': sigs, 'freq': freq, 'protein_info': protein_info}
         for info in protein_info:
             acc = info[3].split('.')[0]
             if acc in self.prot_acc_gi:
