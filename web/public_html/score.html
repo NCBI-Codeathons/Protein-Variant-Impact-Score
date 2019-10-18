@@ -114,7 +114,9 @@ function refine(data) {
   }
   var k, n = 0;
   for (k in data.pssm) {
+console.log('id', k);
     if (data.pssm.hasOwnProperty(k)) {
+console.log('fetching', k);
       n++;
       download('/ajax/fetch?id=' + k).then(function(data) {
        console.log('received data:', data);
