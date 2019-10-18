@@ -74,6 +74,7 @@ Sample web display showing variant scores installed on GCP currently at http://3
 * Include variants that don't have frequency data
 * Include binding site information in the model
 * Sort clincial signficance vs. score
+* Consider situations where multiple clinical signficance values are listed
 
 ## People
 * Hua Zhang NCBI/IEB
