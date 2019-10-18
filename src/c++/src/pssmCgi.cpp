@@ -205,13 +205,16 @@ bool CPssmCgi::setPssmRanges(const string gi)
 				vector< vector<unsigned> > vFromTo, vFromToOri;
 				set<unsigned> sCoveredResCurr; // covered residues for this pssmid
 
-				string pssmid;
+				string pssmid, type;
 
 				if (domArray.at(j).IsObject()) {
 				  CJson_ConstObject obj = domArray.at(j).GetObject();
 
 				  element = obj.find("acc");
 				  pssmid = (element != obj.end() && element->value.IsValue() && element->value.GetValue().IsString()) ? element->value.GetValue().GetString() : "";
+
+				  element = obj.find("type");
+				  type = (element != obj.end() && element->value.IsValue() && element->value.GetValue().IsString()) ? element->value.GetValue().GetString() : "";
 
 		  element = obj.find("locs");
 		  if(element != obj.end() && element->value.IsArray()) {
@@ -221,9 +224,14 @@ bool CPssmCgi::setPssmRanges(const string gi)
 				if (locsArray.at(k).IsObject()) {
 				  CJson_ConstObject obj = locsArray.at(k).GetObject();
 
-				  element = obj.find("alnacc");
-				  if(element != obj.end() && element->value.IsValue() && element->value.GetValue().IsString()) {
-				  	  pssmid = element->value.GetValue().GetString();
+				  if(type == "superfamily") {
+					  element = obj.find("alnacc");
+					  if(element != obj.end() && element->value.IsValue() && element->value.GetValue().IsString()) {
+						  pssmid = element->value.GetValue().GetString();
+					  }
+					  else { // missing alnacc
+						  continue; // skip
+					  }
 				  }
 
 				  element = obj.find("realsegs");
@@ -269,7 +277,7 @@ bool CPssmCgi::setPssmRanges(const string gi)
 					  }
 				  }
 				}
-		      }
+		      } // for
 	  	  }
 				} // end each domain
 
@@ -354,7 +362,13 @@ bool CPssmCgi::setSites(CJson_Document & json_doc)
 	  	  }
 				} // end each domain
 
-				mSite2SCoveredRes.insert(make_pair(title, sCoveredResCurr));
+				if(mSite2SCoveredRes.find(title) == mSite2SCoveredRes.end()) {
+					mSite2SCoveredRes.insert(make_pair(title, sCoveredResCurr));
+				}
+				else {
+					mSite2SCoveredRes[title].insert(sCoveredResCurr.begin(), sCoveredResCurr.end());
+				}
+
 				sCoveredResCurr.clear();
 		      } // for each domain
 	  	  }
@@ -370,31 +384,37 @@ bool CPssmCgi::getPssmScores(unsigned resPos)
 	m_output = "{\"sites\": [";
 
 	unsigned cnt = 0, cnt2 = 0;
+	string currStr;
 
 	map<string, set<unsigned> >::iterator it;
 	cnt = 0;
 	for(it = mSite2SCoveredRes.begin(); it != mSite2SCoveredRes.end(); ++it) {
 		string title = it->first;
-		m_output += "{\"title\": \"" + title + "\", \"resiPos\": [";
+
 		set<unsigned> sPos;
 		sPos = it->second;
 
 		set<unsigned>::iterator itSet;
 		cnt2 = 0;
+		currStr = "";
 		for(itSet = sPos.begin(); itSet != sPos.end(); ++itSet) {
 			if(resPos == 0 || resPos == *itSet + 1) {
-				m_output += NStr::IntToString(*itSet + 1) + ",";
+				currStr += NStr::IntToString(*itSet + 1) + ",";
 				++cnt2;
 			}
 		}
-		if(cnt2 > 0) m_output = m_output.substr(0, m_output.size() - 1);
-		m_output += "]},";
+		if(cnt2 > 0) {
+			currStr = currStr.substr(0, currStr.size() - 1);
+			m_output += "{\"title\": \"" + title + "\", \"resiPos\": [";
+			m_output += currStr;
+			m_output += "]},";
 
-		++cnt;
+			++cnt;
+		}
 	}
 	if(cnt > 0) m_output = m_output.substr(0, m_output.size() - 1);
 
-	m_output += "],\n \"pssmlist\": [";
+	m_output += "], \"pssmlist\": [";
 
 	map<string, vector< vector< unsigned > > >::iterator itMap, itMapOri;
 	cnt = 0;
@@ -449,37 +469,38 @@ bool CPssmCgi::getPssmScores(unsigned resPos)
 		itMapSet = mPssmid2SCoveredRes.find(pssmid);
 		sCoveredResCurr = itMapSet->second;
 
-//		cout<<"pssmid: "<<pssmid<<" sCoveredResCurr size: "<<sCoveredResCurr.size()<<endl;
-
-		m_output += "{\"pssmid\": \"" + pssmid + "\", \"residues\": [";
-
 		cnt2 = 0;
+		currStr = "";
 		for(unsigned i = 0; i < vFromTo.size(); ++i) {
 			for(unsigned j = vFromTo[i][0]; j <= vFromTo[i][1]; ++j) {
 				if(sCoveredResCurr.find(j) != sCoveredResCurr.end()) {
 					if(resPos == 0 || resPos == j+1) {
 						unsigned linenum = vFromToOri[i][0] + j - vFromTo[i][0];
 						// convert from 0-based to 1-based
-						m_output += "{\"resi\": " + NStr::IntToString(j+1) + ", \"pssmlinenum\": " + NStr::IntToString(linenum+1) + ", ";
-						m_output += "\"scores\": {";
+						currStr += "{\"resi\": " + NStr::IntToString(j+1) + ", \"pline\": " + NStr::IntToString(linenum+1) + ", ";
+						currStr += "\"scores\": {";
 						//cout<<"line "<<linenum<<", "<<" resi "<<j<<": ";
 						for(unsigned k = 0; k < vPosScore[linenum].size(); ++k) {
 							//cout<<vPosScore[linenum][k]<<",";
 							string resName = vResName[k];
-							m_output += "\"" + resName + "\": " + NStr::IntToString(vPosScore[linenum][k]);
-							if(k != vPosScore[linenum].size() - 1) m_output += ", ";
+							currStr += "\"" + resName + "\": " + NStr::IntToString(vPosScore[linenum][k]);
+							if(k != vPosScore[linenum].size() - 1) currStr += ", ";
 						}
-						m_output += "}},";
+						currStr += "}},";
 						++cnt2;
 					}
 				}
 			}
 		}
 
-		if(cnt2 > 0) m_output = m_output.substr(0, m_output.size() - 1);
+		if(cnt2 > 0) {
+			currStr = currStr.substr(0, currStr.size() - 1);
+			m_output += "{\"pssmid\": \"" + pssmid + "\", \"residues\": [";
+			m_output += currStr;
+			m_output += "]},";
 
-		m_output += "]},";
-		++cnt;
+			++cnt;
+		}
 	}
 
 	if(cnt > 0) m_output = m_output.substr(0, m_output.size() - 1);
