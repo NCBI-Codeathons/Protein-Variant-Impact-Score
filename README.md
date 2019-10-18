@@ -65,6 +65,9 @@ getpssmforgipos 4557325
 * Python 3.6
 * NCBI C++ toolkit
 
+## Web Display
+Sample web display showing variant scores installed on GCP currently at http://35.207.21.237
+
 ## Planned Features
 
 ## People
