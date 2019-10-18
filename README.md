@@ -59,7 +59,7 @@ getpssmforgipos 4557325
 ```
 
 **Sample output**
-
+![4557325.pssm.json]https://github.com/NCBI-Codeathons/Protein-Variant-Impact-Score/blob/master/data/4557325.pssm.json
 
 ## Dependencies
 * Python 3.6
