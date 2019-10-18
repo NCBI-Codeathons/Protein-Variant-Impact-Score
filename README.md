@@ -14,7 +14,7 @@ Known pathogenic changes in the TP53 protein show up with negative scores (shade
 ## Outline of Method
 We started with a file with 38,299 gi numbers for representative human RefSeq proteins and matched these to 38,277 current RefSeq accessions in the NCBI ID database ([final set](./data/gi_accn_38K)) and mapped scores from missense variants to the conserved domains of the protein. The display will highlight the predicted impact on the protein.
 
-![alt txt](./Flowchart_figures1.png)
+![alt txt](./Flowchart_fig2.png)
 
 
 ## Software
