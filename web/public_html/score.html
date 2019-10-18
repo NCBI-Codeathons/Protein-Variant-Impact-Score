@@ -57,7 +57,7 @@ function aa(x, y, a, c, t) {
 }
 var out = document.getElementById('output');
 for (i = 0; i < 21; i++) {
-  aa(i * 25, i * 5, 'ABCDEFGHIJKLMNOPQRSTU'[i], i - 10, i);
+  //aa(i * 25, i * 5, 'ABCDEFGHIJKLMNOPQRSTU'[i], i - 10, i);
 }
 out.style.wwidth = xx + 'px';
 out.style.height = yy + 'px';
@@ -107,18 +107,13 @@ function unscrewUp(obj) {
 }
 
 function refine(data) {
-  //data = unscrewUp(data);
   var _data = data;
   if (!data.pssm) {
     alert('no data'); return;
   }
   var k, n = 0;
-console.log('DATA:', data);
-console.log('DATA.pssm:', data.pssm);
   for (k in data.pssm) {
-console.log('id', k);
     if (data.pssm.hasOwnProperty(k)) {
-console.log('fetching', k);
       n++;
       download('/ajax/fetch?id=' + k).then(function(data) {
        console.log('received data:', data);
@@ -132,7 +127,16 @@ console.log('fetching', k);
 }
 
 function draw(data) {
+  var i, j, k;
   console.log('drawing:', data);
+  i = 0;
+  for (k in data.pssm.length) {
+    for (j = 0; j < data.pssm[k]) {
+      aa(i * 25, j * 25, data.pssm[k].sequence[i], 10);
+    }
+  }
+  out.style.wwidth = xx + 'px';
+  out.style.height = yy + 'px';
 }
 
 // debug
