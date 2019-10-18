@@ -68,7 +68,7 @@ getpssmforgipos 4557325
 ## Web Display
 Sample web display showing variant scores installed on GCP currently at http://35.207.21.237
 
-## future Directions
+## Future Directions
 * Improve the web interface
 * Sort by specific disease
 * Include variants that don't have frequency data
