@@ -48,11 +48,19 @@ Sample output
 
 ## C++ NCBI Toolkit applications
 **getpssmforgipos** outputs PSSM json object for proteins
+**Input** Protein identifiers (gi numbers). Requires access to internal NCBI CGI to get PSSM information.
 
 **Sample commandline:**
 ```
 getpssmforgipos gi optional_resi_pos
+
+getpssmforgipos 4557325
+
 ```
+
+**Sample output**
+
+
 ## Dependencies
 * Python 3.6
 * NCBI C++ toolkit
