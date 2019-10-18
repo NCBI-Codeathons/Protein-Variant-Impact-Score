@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+</head>
+<body>
+  <div id="div"></div>
+
+<link rel="stylesheet" href="https://www.ncbi.nlm.nih.gov/Structure/icn3d/lib/jquery-ui.min.css">
+<link rel="stylesheet" href="https://www.ncbi.nlm.nih.gov/Structure/icn3d/icn3d_full_ui.css">
+<script src="https://www.ncbi.nlm.nih.gov/Structure/icn3d/lib/jquery.min.js"></script>
+<script src="https://www.ncbi.nlm.nih.gov/Structure/icn3d/lib/jquery-ui.min.js"></script>
+
+  <script type="text/javascript">
+    $( document ).ready(function() {
+        var jsonStr = '{"snp_id": "429358", "pssm": [{"NP_001289620": [{"pssmid": "pfam01442", "residues": [{"resi": 130, "pline": 45, "scores": {"A": -2, "C": -3, "D": -5, "E": 2, "F": -7, "G": -1, "H": -5, "I": -5, "K": 4, "L": -2, "M": -5, "N": -3, "P": -6, "Q": 0, "R": 5, "S": -2, "T": 1, "V": 1, "W": -7, "Y": -6}}]}]}, {"NP_000032": [{"pssmid": "pfam01442", "residues": [{"resi": 130, "pline": 45, "scores": {"A": -2, "C": -3, "D": -5, "E": 2, "F": -7, "G": -1, "H": -5, "I": -5, "K": 4, "L": -2, "M": -5, "N": -3, "P": -6, "Q": 0, "R": 5, "S": -2, "T": 1, "V": 1, "W": -7, "Y": -6}}]}]}, {"NP_001289618": [{"pssmid": "pfam01442", "residues": [{"resi": 130, "pline": 45, "scores": {"A": -2, "C": -3, "D": -5, "E": 2, "F": -7, "G": -1, "H": -5, "I": -5, "K": 4, "L": -2, "M": -5, "N": -3, "P": -6, "Q": 0, "R": 5, "S": -2, "T": 1, "V": 1, "W": -7, "Y": -6}}]}]}, {"NP_001289617": [{"pssmid": "pfam01442", "residues": [{"resi": 156, "pline": 45, "scores": {"A": -2, "C": -3, "D": -5, "E": 2, "F": -7, "G": -1, "H": -5, "I": -5, "K": 4, "L": -2, "M": -5, "N": -3, "P": -6, "Q": 0, "R": 5, "S": -2, "T": 1, "V": 1, "W": -7, "Y": -6}}]}]}, {"NP_001289619": [{"pssmid": "pfam01442", "residues": [{"resi": 130, "pline": 45, "scores": {"A": -2, "C": -3, "D": -5, "E": 2, "F": -7, "G": -1, "H": -5, "I": -5, "K": 4, "L": -2, "M": -5, "N": -3, "P": -6, "Q": 0, "R": 5, "S": -2, "T": 1, "V": 1, "W": -7, "Y": -6}}]}]}], "clin_sig": {"C": ["other", "association", "pathogenic"]}, "freq": [{"C": [5135, 31228]}], "protein_info": [["C", "R", 130, "NP_001289620.1"], ["C", "R", 130, "NP_000032.1"], ["C", "R", 130, "NP_001289618.1"], ["C", "R", 156, "NP_001289617.1"], ["C", "R", 130, "NP_001289619.1"]]}';
+        var json = JSON.parse(jsonStr);
+
+        var resi = json.pssm[0].NP_001289620[0].residues[0].resi;
+        var pssmHash = json.pssm[0].NP_001289620[0].residues[0].scores;
+
+        var mutationArray = json.protein_info[0];
+        var annArray = json.clin_sig[mutationArray[0]];
+        var freqArray = json.freq[0][mutationArray[0]];
+
+        var pssmKeys = Object.keys(pssmHash);
+        pssmKeys.sort(function(a, b) {
+            return pssmHash[a] - pssmHash[b]
+        }).reverse();
+
+        var seq1 = "RLGA"; //"RLGADMEDV";
+        //var allres = "ACDEFGHIKLMNPQRSTVWY"
+        var seq = "C";
+        var seq2 = "GRLV"; // "GRLVQYRGEV";
+
+        var s2c = {};
+        s2c["10"] = "#00AA00";
+        s2c["9"] = "#00BB00";
+        s2c["8"] = "#00CC00";
+        s2c["7"] = "#00DD00";
+        s2c["6"] = "#00EE00";
+        s2c["5"] = "#00FF00";
+        s2c["4"] = "#66FF66";
+        s2c["3"] = "#99FF99";
+        s2c["2"] = "#BBFFBB";
+        s2c["1"] = "#CCEECC";
+        s2c["0"] = "#CCCCCC";
+        s2c["-1"] = "#EECCCC";
+        s2c["-2"] = "#FFBBBB";
+        s2c["-3"] = "#FF9999";
+        s2c["-4"] = "#FF7777";
+        s2c["-5"] = "#FF5555";
+        s2c["-6"] = "#FF0000";
+        s2c["-7"] = "#EE0000";
+        s2c["-8"] = "#DD0000";
+
+        var legend = '<table cellspacing="0" cellpadding="0" width="50" border="1">';
+        legend += '<tbody><tr><td width="50" align="center">Scores</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00AA00">10</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00BB00">9</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00CC00">8</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00DD00">7</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00EE00">6</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#00FF00">5</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#66FF66">4</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#99FF99">3</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#BBFFBB">2</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#CCEECC">1</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#CCCCCC">0</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#EECCCC">-1</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#FFBBBB">-2</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#FF9999">-3</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#FF7777">-4</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#FF5555">-5</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#FF0000">-6</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#EE0000">-7</td>';
+        legend += '</tr><tr><td align="center" bgcolor="#DD0000">-8</td>';
+        legend += '</tr></tbody></table>';
+
+        rightTable += '<tr><td valign="top">&nbsp;<---</td><td rowspan="10" colspan="3" width="200" valign="top">' + mutationHtml + '</td></tr></table>';
+
+        var mutationHtml = '<table cellspacing="0" cellpadding="0" border="0"><tr><td valign="top" width="50">&nbsp;<---</td>';
+        mutationHtml += "<td><b>Mutated</b> from <span color=''>" + mutationArray[0] + "</span> to <span color=''>" + mutationArray[1] + "</span><br><b>Clinical Sig.</b>: ";
+        for(var i = 0; i < annArray.length; ++i) {
+            mutationHtml += annArray[i] + "; ";
+        }
+        mutationHtml += "<br><b>Freq:</b> ";
+        for(var i = 0; i < freqArray.length; ++i) {
+            mutationHtml += freqArray[i];
+            if(i != freqArray.length - 1) mutationHtml += " / ";
+        }
+
+        mutationHtml += '</td></tr></table>';
+
+        var base;
+
+        var leftTable = '<table cellspacing="0" cellpadding="0" border="1"><tr>';
+        base = resi - 4;
+        for(var i = 0, il = seq1.length; i < il; ++i) {
+            leftTable += '<td align="center" width="50">' + (base + i).toString() + '<br>' + seq1[i] + '</td>';
+        }
+        leftTable += '</tr></table>';
+
+        var rightTable = '<table cellspacing="0" cellpadding="0" border="1"><tr>';
+        base = resi + 1;
+        for(var i = 0, il = seq2.length; i < il; ++i) {
+            rightTable += '<td align="center" width="50">' + (base + i).toString() + '<br>' + seq2[i] + '</td>';
+        }
+        rightTable += '</tr>';
+
+        rightTable += '<tr><td rowspan="10" colspan="4" width="200" valign="top">' + mutationHtml + '</td></tr></table>';
+
+        var centerTable = '<table cellspacing="0" cellpadding="0" border="1"><tr><td align="center" width="50">' + resi + '<br>' + seq + '</td></tr>';
+        for(var i = 0, il = pssmKeys.length; i < il; ++i) {
+            var resn = pssmKeys[i];
+            var score = pssmHash[resn];
+            var color = s2c[score];
+
+            centerTable += '<tr><td align="center" width="50" bgcolor="' + color + '">' + pssmKeys[i] + '</td></tr>';
+        }
+        centerTable += '</table>';
+
+        var html = '<br><b>Protein: NP_001289620</b><br><br>';
+        html += '<table cellspacing="0" cellpadding="0" border="0"><tr>';
+        html += '<td valign="top" width="100">' + legend + '</td>';
+        html += '<td valign="top">' + leftTable + '</td>';
+        html += '<td valign="top">' + centerTable + '</td>';
+        html += '<td valign="top">' + rightTable + '</td>';
+        html += '</tr></table>';
+
+        $("#div").html(html);
+    }); // document ready
+  </script>
+
+</body></html>
+
