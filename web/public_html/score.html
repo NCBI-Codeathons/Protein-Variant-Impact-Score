@@ -131,9 +131,9 @@ function draw(data) {
   console.log('drawing:', data);
   i = 0;
   for (k in data.pssm) {
-    for (j = 0; j < data.pssm[k].length; j++) {
+    for (j = 0; j < data.pssm[k].sequence.length; j++) {
 console.log(i,j,k);
-      aa(j * 25, i * 25, data.pssm[k].sequence[i], 10);
+      aa(j * 25, i * 25, data.pssm[k].sequence[j], 0);
     }
     i++;
   }
