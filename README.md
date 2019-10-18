@@ -66,7 +66,7 @@ getpssmforgipos 4557325
 * NCBI C++ toolkit
 
 ## Web Display
-Sample web display showing variant scores installed on GCP currently at http://35.207.21.237 A crude mockup for the web display shown below.
+Sample web display showing variant scores installed on GCP currently at http://35.207.21.237 A crude mockup for the web display shown below. Demo code is available in this repo in [/web](./web)
 
 ![](./Display_mockup.png)
 
